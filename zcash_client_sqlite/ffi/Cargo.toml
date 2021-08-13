@@ -1,0 +1,18 @@
+[package]
+name = "zcash_client_sqlite_ffi"
+version = "0.0.0"
+authors = ["Jack Grigg <jack@electriccoin.co>"]
+edition = "2018"
+publish = false
+
+[dependencies]
+uniffi = "0.13"
+uniffi_macros = "0.13"
+zcash_client_sqlite = { version = "0.3", path = "../" }
+
+[build-dependencies]
+uniffi_build = "0.13"
+
+[lib]
+crate-type = ["cdylib"]
+name = "zcashclientsqlite"
