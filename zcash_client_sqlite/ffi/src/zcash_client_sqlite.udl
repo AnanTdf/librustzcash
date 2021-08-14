@@ -1,3 +1,17 @@
+enum Network {
+    "MainNetwork",
+    "TestNetwork",
+};
+
+[Error]
+enum Error {
+    "InvalidExtSk",
+    "WrongNetwork",
+};
+
 namespace zcash_client_sqlite {
-    u32 add(u32 a, u32 b);
+    sequence<string> derive_spending_keys([ByRef] sequence<u8> seed, Network network, u32 accounts);
+
+    [Throws=Error]
+    string derive_extfvk(Network network, [ByRef] string extsk);
 };
