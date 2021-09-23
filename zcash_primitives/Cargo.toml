@@ -29,13 +29,11 @@ ff = "0.11"
 fpe = "0.5"
 group = "0.11"
 hex = "0.4"
-incrementalmerkletree = "0.1"
 jubjub = "0.8"
 lazy_static = "1"
 log = "0.4"
 memuse = "0.2"
 nonempty = "0.7"
-orchard = "0.0"
 pasta_curves = "0.2.1"
 proptest = { version = "1.0.0", optional = true }
 rand = "0.8"
@@ -47,12 +45,24 @@ subtle = "2.2.3"
 zcash_encoding = { version = "0.0", path = "../components/zcash_encoding" }
 zcash_note_encryption = { version = "0.0", path = "../components/zcash_note_encryption" }
 
+[dependencies.incrementalmerkletree]
+git = "https://github.com/zcash/incrementalmerkletree.git"
+rev = "b7bd6246122a6e9ace8edb51553fbf5228906cbb"
+
+[dependencies.orchard]
+git = "https://github.com/zcash/orchard.git"
+rev = "db8ed97130f564333a5bb429fad60c2b1ef98c13"
+
 [dev-dependencies]
 criterion = "0.3"
 hex-literal = "0.3"
 proptest = "1.0.0"
 rand_xorshift = "0.3"
-orchard = { version = "0.0", features = ["test-dependencies"] }
+
+[dev-dependencies.orchard]
+git = "https://github.com/zcash/orchard.git"
+rev = "db8ed97130f564333a5bb429fad60c2b1ef98c13"
+features = ["test-dependencies"]
 
 [target.'cfg(unix)'.dev-dependencies]
 pprof = { version = "0.5", features = ["criterion", "flamegraph"] }
