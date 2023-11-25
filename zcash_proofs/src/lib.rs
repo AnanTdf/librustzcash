@@ -95,3 +95,35 @@ pub fn load_parameters(
 
     (spend_params, spend_vk, output_params, output_vk, sprout_vk)
 }
+
+pub fn download_parameters(
+    base_url: &str,
+) -> (
+    Parameters<Bls12>,
+    PreparedVerifyingKey<Bls12>,
+    Parameters<Bls12>,
+    PreparedVerifyingKey<Bls12>,
+) {
+    let (output_params, output_vk) = download_params_by_name(base_url, "sapling-output.params");
+    let (spend_params, spend_vk) = download_params_by_name(base_url, "sapling-spend.params");
+    (spend_params, spend_vk, output_params, output_vk)
+}
+
+fn download_params_by_name(
+    baseurl: &str,
+    name: &str,
+) -> (Parameters<Bls12>, PreparedVerifyingKey<Bls12>) {
+    // https://download.z.cash/downloads/sapling-output.params
+    let res = reqwest::blocking::get(format!("{}/{}", baseurl, name).as_str()).unwrap();
+    let bytes = res.bytes().unwrap();
+    let mut reader = hashreader::HashReader::new(BufReader::with_capacity(1024 * 1024, &bytes[..]));
+    let params = Parameters::<Bls12>::read(&mut reader, false)
+        .expect("couldn't deserialize Sapling spend parameters file");
+    let vk = prepare_verifying_key(&params.vk);
+    (params, vk)
+}
+
+#[test]
+fn test_download() {
+    download_parameters("https://download.z.cash/downloads");
+}
