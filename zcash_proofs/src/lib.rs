@@ -26,8 +26,8 @@ pub async fn download_parameters(
     Parameters<Bls12>,
     PreparedVerifyingKey<Bls12>,
 ) {
-    let (output_params, output_vk) = download_params_by_name(base_url, "sapling-output.params").await.unwrap();
-    let (spend_params, spend_vk) = download_params_by_name(base_url, "sapling-spend.params").await.unwrap();
+    let (output_params, output_vk) = download_params_by_name(base_url, "sapling-output.params").await;
+    let (spend_params, spend_vk) = download_params_by_name(base_url, "sapling-spend.params").await;
     (spend_params, spend_vk, output_params, output_vk)
 }
 
