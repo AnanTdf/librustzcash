@@ -19,7 +19,7 @@ byteorder = "1"
 rand = "0.6"
 sapling-crypto = { path = "../sapling-crypto" }
 zcash_primitives = { path = "../zcash_primitives" }
-zcash_proofs = { path = "../zcash_proofs" }
+zcash_proofs = { path = "../zcash_proofs", default-features = false }
 
 [dependencies.blake2-rfc]
 git = "https://github.com/gtank/blake2-rfc"
