@@ -39,7 +39,7 @@ async fn download_params_by_name(
     // https://download.z.cash/downloads/sapling-output.params
     let url = format!("{}/{}", baseurl, name);
     let resp = Request::get(&url).send().await;
-    let bytes = resp.binary().await.unwrap();
+    let bytes = resp.unwrap().binary().await.unwrap();
     let mut reader = hashreader::HashReader::new(BufReader::with_capacity(1024 * 1024, &bytes[..]));
     let params = Parameters::<Bls12>::read(&mut reader, false)
         .expect("couldn't deserialize Sapling spend parameters file");
