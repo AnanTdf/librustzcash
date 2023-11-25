@@ -8,10 +8,6 @@ authors = [
     "Simon Liu <simon@z.cash>"
     ]
 
-[lib]
-name = "rustzcash"
-path = "src/rustzcash.rs"
-crate-type = ["staticlib"]
 
 [dependencies]
 bellman = { path = "../bellman" }
