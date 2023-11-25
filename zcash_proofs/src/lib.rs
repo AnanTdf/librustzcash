@@ -1,6 +1,7 @@
 extern crate bellman;
 extern crate blake2_rfc;
 extern crate byteorder;
+extern crate ehttp;
 extern crate ff;
 extern crate pairing;
 extern crate rand;
@@ -11,6 +12,7 @@ extern crate zcash_primitives;
 extern crate directories;
 
 use bellman::groth16::{prepare_verifying_key, Parameters, PreparedVerifyingKey, VerifyingKey};
+use ehttp::Request;
 use pairing::bls12_381::Bls12;
 use std::fs::File;
 use std::io::{self, BufReader};
@@ -114,12 +116,16 @@ fn download_params_by_name(
     name: &str,
 ) -> (Parameters<Bls12>, PreparedVerifyingKey<Bls12>) {
     // https://download.z.cash/downloads/sapling-output.params
-    let res = reqwest::blocking::get(format!("{}/{}", baseurl, name).as_str()).unwrap();
-    let bytes = res.bytes().unwrap();
+    let request = Request {
+        ..Request::get(format!("{}/{}", baseurl, name))
+    };
+    let res = ehttp::fetch_blocking(&request).unwrap();
+    let bytes = res.bytes;
     let mut reader = hashreader::HashReader::new(BufReader::with_capacity(1024 * 1024, &bytes[..]));
     let params = Parameters::<Bls12>::read(&mut reader, false)
         .expect("couldn't deserialize Sapling spend parameters file");
     let vk = prepare_verifying_key(&params.vk);
+    println!("file hash: {}", reader.into_hash());
     (params, vk)
 }
 
