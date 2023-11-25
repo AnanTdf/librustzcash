@@ -18,7 +18,7 @@ mod hashreader;
 pub mod sapling;
 
 #[cfg(target_arch = "wasm32")]
-pub fn download_parameters(
+pub async fn download_parameters(
     base_url: &str,
 ) -> (
     Parameters<Bls12>,
@@ -32,7 +32,7 @@ pub fn download_parameters(
 }
 
 #[cfg(target_arch = "wasm32")]
-fn download_params_by_name(
+async fn download_params_by_name(
     baseurl: &str,
     name: &str,
 ) -> (Parameters<Bls12>, PreparedVerifyingKey<Bls12>) {
