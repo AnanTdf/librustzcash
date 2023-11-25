@@ -35,7 +35,7 @@ fn download_params_by_name(
         ..Request::get(format!("{}/{}", baseurl, name))
     };
 
-    let res = ehttp::fetch_async(&request).unwrap();
+    let res = ehttp::fetch_async(&request).await.unwrap();
     let bytes = res.bytes;
     let mut reader = hashreader::HashReader::new(BufReader::with_capacity(1024 * 1024, &bytes[..]));
     let params = Parameters::<Bls12>::read(&mut reader, false)
