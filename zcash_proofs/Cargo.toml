@@ -15,7 +15,7 @@ pairing = { path = "../pairing" }
 rand = "0.6"
 sapling-crypto = { path = "../sapling-crypto", default-features = false }
 zcash_primitives = { path = "../zcash_primitives", default-features = false }
-gloo-net = "0.4.0"
+minreq = { version = "2.11.0", features = ["https"] }
 
 [dependencies.blake2-rfc]
 git = "https://github.com/gtank/blake2-rfc"
